@@ -14,7 +14,7 @@ e.g. `bulk-calc.v1.blueprint.json`
 
 | Slug | Purpose | Milestone |
 |---|---|---|
-| `bulk-calc` | Engine 1 — live offer from GoldAPI + Airtable margins | M1 |
+| `bulk-calc` | Engine 1 — live offer from metals-api.com + Airtable margins | M1 |
 | `graded-lookup` | Engine 2 — PCGS/NGC via PCGS API + CDN Greysheet | M2 |
 | `raw-coin-lookup` | Engine 2 fallback — Airtable override table | M2 |
 | `ebay-comps` | Engine 3 — Apify eBay Sold Listings actor | M2 |

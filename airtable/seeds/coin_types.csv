@@ -1,35 +1,25 @@
-name,denomination,face_value,metal_type,content_pct,priced_by,active
-Kennedy Half 1964,half,0.50,silver,0.90,face_value,TRUE
-Kennedy Half 65-70,half,0.50,silver,0.40,face_value,TRUE
-Peace Silver Dollar,dollar,1.00,silver,0.90,face_value,TRUE
-Morgan Silver Dollar,dollar,1.00,silver,0.90,face_value,TRUE
-Eisenhower 40% Dollar,dollar,1.00,silver,0.40,face_value,TRUE
-Roosevelt Dime,dime,0.10,silver,0.90,face_value,TRUE
-Mercury Dime,dime,0.10,silver,0.90,face_value,TRUE
-Seated Liberty Dime,dime,0.10,silver,0.90,face_value,TRUE
-Barber Dime,dime,0.10,silver,0.90,face_value,TRUE
-Washington Quarter,quarter,0.25,silver,0.90,face_value,TRUE
-Standing Liberty Quarter,quarter,0.25,silver,0.90,face_value,TRUE
-Barber Quarter,quarter,0.25,silver,0.90,face_value,TRUE
-Seated Liberty Half,half,0.50,silver,0.90,face_value,TRUE
-Walking Liberty Half,half,0.50,silver,0.90,face_value,TRUE
-Franklin Half,half,0.50,silver,0.90,face_value,TRUE
-Barber Half,half,0.50,silver,0.90,face_value,TRUE
-Jefferson War Nickel,nickel,0.05,silver,0.35,face_value,TRUE
-Wheat/Steel Penny,penny,0.01,copper,0.00,face_value,TRUE
-Indian Head Penny,penny,0.01,collectible,0.00,face_value,TRUE
-Flying Eagle Penny,penny,0.01,collectible,0.00,face_value,TRUE
-Large Cent,penny,0.01,collectible,0.00,face_value,TRUE
-Shield Nickel,nickel,0.05,collectible,0.00,face_value,TRUE
-Victory Nickel,nickel,0.05,collectible,0.00,face_value,TRUE
-Buffalo Nickel,nickel,0.05,collectible,0.00,face_value,TRUE
-Half Cent,penny,0.005,collectible,0.00,face_value,TRUE
-2 Cent Piece,penny,0.02,collectible,0.00,face_value,TRUE
-3 Cent Piece,penny,0.03,collectible,0.00,face_value,TRUE
-.999 Fine Silver,bulk,0.00,silver,1.00,weight,TRUE
-Sterling Silver,bulk,0.00,silver,0.925,weight,TRUE
-10K Gold,bulk,0.00,gold,0.416,weight,TRUE
-14K Gold,bulk,0.00,gold,0.583,weight,TRUE
-18K Gold,bulk,0.00,gold,0.75,weight,TRUE
-22K Gold,bulk,0.00,gold,0.90,weight,TRUE
-Platinum,bulk,0.00,platinum,0.80,weight,TRUE
+name,metal_type,priced_by,oz_metal_per_unit,face_value,unit_label,active
+Roosevelt Dime,silver,each_metal,0.07234,0.10,coin,TRUE
+Mercury Dime,silver,each_metal,0.07234,0.10,coin,TRUE
+Barber Dime,silver,each_metal,0.07234,0.10,coin,TRUE
+Seated Liberty Dime,silver,each_metal,0.07234,0.10,coin,TRUE
+Washington Quarter,silver,each_metal,0.18084,0.25,coin,TRUE
+Standing Liberty Quarter,silver,each_metal,0.18084,0.25,coin,TRUE
+Barber Quarter,silver,each_metal,0.18084,0.25,coin,TRUE
+Kennedy Half 1964,silver,each_metal,0.36169,0.50,coin,TRUE
+Kennedy Half 1965-70,silver,each_metal,0.14790,0.50,coin,TRUE
+Walking Liberty Half,silver,each_metal,0.36169,0.50,coin,TRUE
+Franklin Half,silver,each_metal,0.36169,0.50,coin,TRUE
+Barber Half,silver,each_metal,0.36169,0.50,coin,TRUE
+Seated Liberty Half,silver,each_metal,0.36169,0.50,coin,TRUE
+Morgan Silver Dollar,silver,each_metal,0.77344,1.00,coin,TRUE
+Peace Silver Dollar,silver,each_metal,0.77344,1.00,coin,TRUE
+Eisenhower 40% Dollar,silver,each_metal,0.31624,1.00,coin,TRUE
+Jefferson War Nickel,silver,each_metal,0.05626,0.05,coin,TRUE
+.999 Fine Silver,silver,weight_grams,0.03215,,gram,TRUE
+Sterling Silver,silver,weight_grams,0.02974,,gram,TRUE
+10K Gold,gold,weight_grams,0.01337,,gram,TRUE
+14K Gold,gold,weight_grams,0.01874,,gram,TRUE
+18K Gold,gold,weight_grams,0.02412,,gram,TRUE
+22K Gold,gold,weight_grams,0.02947,,gram,TRUE
+Platinum Scrap,platinum,weight_grams,0.02572,,gram,TRUE

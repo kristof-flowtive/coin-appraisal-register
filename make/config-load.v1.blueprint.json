@@ -1,0 +1,392 @@
+{
+  "name": "config-load",
+  "flow": [
+    {
+      "id": 1,
+      "module": "gateway:CustomWebHook",
+      "version": 1,
+      "parameters": {
+        "hook": null,
+        "maxResults": 1
+      },
+      "mapper": {},
+      "metadata": {
+        "designer": {
+          "x": 0,
+          "y": 0
+        },
+        "restore": {
+          "parameters": {
+            "hook": {
+              "data": {
+                "editable": "true"
+              },
+              "label": "config-load"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "hook",
+            "type": "hook:gateway-webhook",
+            "label": "Webhook",
+            "required": true
+          },
+          {
+            "name": "maxResults",
+            "type": "number",
+            "label": "Maximum number of results"
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "module": "airtable:ActionSearchRecords",
+      "version": 3,
+      "parameters": {
+        "__IMTCONN__": null
+      },
+      "mapper": {
+        "base": "app8Nd28yqiXl4pcQ",
+        "table": "tbl65pXZIR60gnZ26",
+        "formula": "{active} = TRUE()",
+        "maxRecords": "100",
+        "useColumnId": false
+      },
+      "metadata": {
+        "designer": {
+          "x": 300,
+          "y": 0
+        },
+        "restore": {
+          "parameters": {
+            "__IMTCONN__": {
+              "data": {
+                "scoped": "true",
+                "connection": "airtable3"
+              },
+              "label": "client-airtable"
+            }
+          },
+          "expect": {
+            "base": {
+              "label": "Coin Appraisal Register",
+              "mode": "chose"
+            },
+            "table": {
+              "label": "Config_CoinTypes",
+              "mode": "chose"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "__IMTCONN__",
+            "type": "account:airtable3,airtable2",
+            "label": "Connection",
+            "required": true
+          }
+        ],
+        "expect": [
+          {
+            "name": "base",
+            "type": "select",
+            "label": "Base",
+            "required": true
+          },
+          {
+            "name": "table",
+            "type": "select",
+            "label": "Table",
+            "required": true
+          },
+          {
+            "name": "formula",
+            "type": "text",
+            "label": "Formula"
+          },
+          {
+            "name": "maxRecords",
+            "type": "uinteger",
+            "label": "Limit"
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "module": "builtin:BasicAggregator",
+      "version": 1,
+      "parameters": {
+        "feeder": 2
+      },
+      "mapper": {
+        "id": "{{2.id}}",
+        "name": "{{2.name}}",
+        "metal_type": "{{2.metal_type}}",
+        "priced_by": "{{2.priced_by}}",
+        "unit_label": "{{2.unit_label}}",
+        "face_value": "{{2.face_value}}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 600,
+          "y": 0
+        },
+        "restore": {
+          "extra": {
+            "feeder": {
+              "label": "Search Records [2]"
+            },
+            "target": {
+              "label": "Custom"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 4,
+      "module": "airtable:ActionSearchRecords",
+      "version": 3,
+      "parameters": {
+        "__IMTCONN__": null
+      },
+      "mapper": {
+        "base": "app8Nd28yqiXl4pcQ",
+        "table": "tblDS6EE5exkxN9mm",
+        "formula": "{active} = TRUE()",
+        "maxRecords": "100",
+        "useColumnId": false
+      },
+      "metadata": {
+        "designer": {
+          "x": 900,
+          "y": 0
+        },
+        "restore": {
+          "parameters": {
+            "__IMTCONN__": {
+              "data": {
+                "scoped": "true",
+                "connection": "airtable3"
+              },
+              "label": "client-airtable"
+            }
+          },
+          "expect": {
+            "base": {
+              "label": "Coin Appraisal Register",
+              "mode": "chose"
+            },
+            "table": {
+              "label": "Config_Reps",
+              "mode": "chose"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "__IMTCONN__",
+            "type": "account:airtable3,airtable2",
+            "label": "Connection",
+            "required": true
+          }
+        ],
+        "expect": [
+          {
+            "name": "base",
+            "type": "select",
+            "label": "Base",
+            "required": true
+          },
+          {
+            "name": "table",
+            "type": "select",
+            "label": "Table",
+            "required": true
+          },
+          {
+            "name": "formula",
+            "type": "text",
+            "label": "Formula"
+          },
+          {
+            "name": "maxRecords",
+            "type": "uinteger",
+            "label": "Limit"
+          }
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "module": "builtin:BasicAggregator",
+      "version": 1,
+      "parameters": {
+        "feeder": 4
+      },
+      "mapper": {
+        "id": "{{4.id}}",
+        "name": "{{4.name}}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 1200,
+          "y": 0
+        },
+        "restore": {
+          "extra": {
+            "feeder": {
+              "label": "Search Records [4]"
+            },
+            "target": {
+              "label": "Custom"
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": 6,
+      "module": "json:CreateJSON",
+      "version": 1,
+      "parameters": {
+        "type": null,
+        "space": ""
+      },
+      "mapper": {
+        "coin_types": "{{3.array}}",
+        "reps": "{{5.array}}"
+      },
+      "metadata": {
+        "designer": {
+          "x": 1500,
+          "y": 0
+        },
+        "restore": {
+          "parameters": {
+            "type": {
+              "label": "config-load-response-v1"
+            },
+            "space": {
+              "label": "Empty"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "type",
+            "type": "udt",
+            "label": "Data structure",
+            "required": true
+          },
+          {
+            "name": "space",
+            "type": "select",
+            "label": "Indentation",
+            "validate": {
+              "enum": ["tab", "2", "4"]
+            }
+          }
+        ],
+        "expect": [
+          {
+            "name": "coin_types",
+            "type": "array",
+            "label": "Coin Types",
+            "spec": {
+              "type": "collection",
+              "spec": [
+                { "name": "id", "type": "text", "label": "id" },
+                { "name": "name", "type": "text", "label": "name" },
+                { "name": "metal_type", "type": "text", "label": "metal_type" },
+                { "name": "priced_by", "type": "text", "label": "priced_by" },
+                { "name": "unit_label", "type": "text", "label": "unit_label" },
+                { "name": "face_value", "type": "number", "label": "face_value" }
+              ]
+            }
+          },
+          {
+            "name": "reps",
+            "type": "array",
+            "label": "Reps",
+            "spec": {
+              "type": "collection",
+              "spec": [
+                { "name": "id", "type": "text", "label": "id" },
+                { "name": "name", "type": "text", "label": "name" }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": 7,
+      "module": "gateway:WebhookRespond",
+      "version": 1,
+      "parameters": {},
+      "mapper": {
+        "status": "200",
+        "body": "{{6.json}}",
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ]
+      },
+      "metadata": {
+        "designer": {
+          "x": 1800,
+          "y": 0
+        },
+        "restore": {},
+        "expect": [
+          { "name": "status", "type": "uinteger", "label": "Status", "required": true },
+          { "name": "body", "type": "any", "label": "Body" },
+          {
+            "name": "headers",
+            "type": "array",
+            "label": "Custom headers",
+            "spec": [
+              { "name": "key", "type": "text", "label": "Key" },
+              { "name": "value", "type": "text", "label": "Value" }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "metadata": {
+    "instant": true,
+    "version": 1,
+    "scenario": {
+      "roundtrips": 1,
+      "maxErrors": 3,
+      "autoCommit": true,
+      "autoCommitTriggerLast": true,
+      "sequential": false,
+      "confidential": false,
+      "dataloss": false,
+      "dlq": false,
+      "freshVariables": false
+    },
+    "designer": {
+      "orphans": []
+    },
+    "zone": "us2.make.com",
+    "notes": [
+      {
+        "moduleIds": [2, 4],
+        "content": "Map the connection to your client-airtable connection during import. Base + table IDs are pre-set for the Coin Appraisal Register base."
+      },
+      {
+        "moduleIds": [6],
+        "content": "Data structure 'config-load-response-v1' will need to be created during import — Make may prompt for it. If not, define it manually with the Generator using a sample response from the api-integrations doc."
+      }
+    ]
+  }
+}
