@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Coin Appraisal Register — Platform Decision</title>
+<style>
+  @page { size: A4; margin: 18mm 16mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+    color: #1a1a1a;
+    margin: 0;
+    padding: 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .cover {
+    page-break-after: always;
+    padding: 60mm 0 0 0;
+    border-top: 4px solid #c9a227;
+  }
+  .cover .eyebrow {
+    font-size: 9pt;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #c9a227;
+    margin-bottom: 8mm;
+    font-weight: 600;
+  }
+  .cover h1 {
+    font-size: 28pt;
+    line-height: 1.15;
+    margin: 0 0 4mm 0;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+  .cover .subtitle {
+    font-size: 13pt;
+    color: #555;
+    margin-bottom: 30mm;
+    font-weight: 300;
+  }
+  .cover .meta {
+    font-size: 9.5pt;
+    color: #555;
+    border-top: 1px solid #ddd;
+    padding-top: 6mm;
+  }
+  .cover .meta dt { font-weight: 600; color: #1a1a1a; }
+  .cover .meta dd { margin: 0 0 3mm 0; }
+  h2 {
+    font-size: 15pt;
+    margin: 9mm 0 4mm 0;
+    padding-bottom: 2mm;
+    border-bottom: 2px solid #c9a227;
+    font-weight: 600;
+    page-break-after: avoid;
+  }
+  h3 {
+    font-size: 12pt;
+    margin: 6mm 0 2mm 0;
+    font-weight: 600;
+    page-break-after: avoid;
+  }
+  h4 {
+    font-size: 10.5pt;
+    margin: 4mm 0 1.5mm 0;
+    font-weight: 600;
+    color: #444;
+    page-break-after: avoid;
+  }
+  p { margin: 0 0 3mm 0; }
+  ul, ol { margin: 0 0 3mm 0; padding-left: 6mm; }
+  li { margin-bottom: 1.5mm; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 3mm 0 5mm 0;
+    font-size: 9.5pt;
+    page-break-inside: avoid;
+  }
+  th {
+    background: #f5f1e6;
+    text-align: left;
+    padding: 2.5mm 3mm;
+    border-bottom: 2px solid #c9a227;
+    font-weight: 600;
+  }
+  td {
+    padding: 2.5mm 3mm;
+    border-bottom: 1px solid #e6e6e6;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: #fafafa; }
+  .option-card {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 6mm;
+    margin: 4mm 0 6mm 0;
+    page-break-inside: avoid;
+  }
+  .option-card.recommended {
+    border: 2px solid #c9a227;
+    background: #fffbef;
+  }
+  .option-card .label {
+    display: inline-block;
+    font-size: 8pt;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    background: #c9a227;
+    color: white;
+    padding: 1mm 3mm;
+    border-radius: 2px;
+    margin-bottom: 3mm;
+    font-weight: 600;
+  }
+  .option-card.recommended .label { background: #c9a227; }
+  .option-card.not-recommended .label { background: #999; }
+  .option-card h3 { margin-top: 0; }
+  .pros-cons { display: flex; gap: 5mm; margin: 3mm 0; }
+  .pros, .cons { flex: 1; }
+  .pros h4 { color: #2d6a3a; margin-top: 0; }
+  .cons h4 { color: #8a3a3a; margin-top: 0; }
+  .cost-line {
+    background: #f5f1e6;
+    padding: 3mm 4mm;
+    border-left: 3px solid #c9a227;
+    margin: 3mm 0;
+    font-weight: 600;
+    font-size: 10pt;
+  }
+  .summary-box {
+    background: #f5f1e6;
+    border-left: 4px solid #c9a227;
+    padding: 5mm 6mm;
+    margin: 4mm 0 6mm 0;
+    page-break-inside: avoid;
+  }
+  .summary-box h3 { margin-top: 0; }
+  .recommendation-box {
+    background: #fffbef;
+    border: 2px solid #c9a227;
+    padding: 6mm 7mm;
+    margin: 5mm 0;
+    border-radius: 4px;
+    page-break-inside: avoid;
+  }
+  .recommendation-box h2 {
+    border: none;
+    padding: 0;
+    margin-top: 0;
+    color: #8a6a00;
+  }
+  .star { color: #c9a227; }
+  .muted { color: #888; }
+  .check { color: #2d6a3a; font-weight: 600; }
+  .cross { color: #8a3a3a; font-weight: 600; }
+  .warn { color: #b58400; font-weight: 600; }
+  small { color: #666; font-size: 9pt; }
+  .page-break { page-break-before: always; }
+</style>
+</head>
+<body>
+
+<section class="cover">
+  <div class="eyebrow">Platform Decision Document</div>
+  <h1>Coin Appraisal Register</h1>
+  <div class="subtitle">M1 Build Path — Three Options, Trade-offs, and Recommendation</div>
+  <dl class="meta">
+    <dt>Project</dt>
+    <dd>Coin Appraisal Register — iPad floor-staff app for live coin/bullion pricing</dd>
+    <dt>Milestone</dt>
+    <dd>M1 (Calculator + Refresh Config)</dd>
+    <dt>Date</dt>
+    <dd>27 April 2026</dd>
+    <dt>Decision required by</dt>
+    <dd>Client — choice between three platform options outlined below</dd>
+  </dl>
+</section>
+
+<section>
+  <h2>Executive Summary</h2>
+  <p>The M1 build is mid-flight on <strong>Glide</strong>, the no-code platform originally selected. During implementation we hit a pricing constraint that wasn't visible at design time: Glide meters every data change against a monthly "updates" quota, with overage charges that scale unfavourably with daily usage. At expected floor-staff volumes (50–100 customer interactions per day), Glide's effective cost lands in the <strong>$240–570/mo</strong> range — substantially higher than originally scoped.</p>
+  <p>This document evaluates three paths forward and recommends a decision. The Make.com workflows, Airtable schema, and metals-api integration are <strong>complete and unaffected</strong> by this decision — only the iPad frontend platform is on the table.</p>
+
+  <div class="summary-box">
+    <h3>The three options at a glance</h3>
+    <table>
+      <thead>
+        <tr><th style="width:25%">Option</th><th style="width:25%">Year-1 cost (moderate use)</th><th>Best for</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>A. Glide Business</strong></td><td>~$4,400/yr</td><td>Fastest path, best polish, recurring expense acceptable</td></tr>
+        <tr><td><strong>B. Softr</strong></td><td>~$700–2,000/yr</td><td>Budget-driven no-code with UX trade-offs</td></tr>
+        <tr><td><strong>C. Custom-built PWA</strong></td><td>~$0/yr recurring + one-time build</td><td>Heavy use, long horizon, dev relationship in place</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>Background — what the app does</h2>
+  <p>A floor-staff iPad app for live coin and bullion pricing. Reps select themselves from a dropdown, add line items (silver coins by count, bullion by gram weight), and see a live total computed from current spot prices and per-category margins.</p>
+  <p>The system has three layers, two of which are already complete:</p>
+  <table>
+    <thead><tr><th style="width:25%">Layer</th><th style="width:25%">Status</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td>Airtable</td><td><span class="check">Complete</span></td><td>Stores config — coin types, margins, reps. Future deal log lives here too.</td></tr>
+      <tr><td>Make.com</td><td><span class="check">Complete</span></td><td>Two scenarios: <em>bulk-calc</em> (live spot price + math) and <em>config-load</em> (read coin types + reps). Both tested and working.</td></tr>
+      <tr><td>iPad frontend (PWA)</td><td><span class="warn">Decision pending</span></td><td>The screen reps interact with — installs to iPad home screen, no app store. <strong>This document chooses the platform for this layer.</strong></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h2>Why we're at this decision point</h2>
+  <p>Glide bills "updates" — each data change (cart adds, calculations, refreshes) consumes from a monthly quota. After exhausting the included quota, every additional update costs $0.02.</p>
+
+  <h3>Glide's published pricing tiers</h3>
+  <table>
+    <thead><tr><th>Tier</th><th>Monthly base</th><th>Updates included</th><th>Overage</th></tr></thead>
+    <tbody>
+      <tr><td>Explorer</td><td>$25</td><td>250</td><td>$0.02 each</td></tr>
+      <tr><td>Maker</td><td>$60</td><td>500</td><td>$0.02 each</td></tr>
+      <tr><td>Business</td><td>$249</td><td>5,000</td><td>$0.02 each</td></tr>
+    </tbody>
+  </table>
+
+  <h3>What that means for floor-staff use</h3>
+  <p>A typical customer interaction consumes ~9 updates (3 cart adds + 1 calculate + 3 cart clears + ~2 misc). Plus ~50 per daily config refresh. Projected monthly cost on each Glide tier:</p>
+
+  <table>
+    <thead>
+      <tr><th>Daily interactions</th><th>Monthly updates</th><th>Explorer total</th><th>Maker total</th><th>Business total</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>20 (slow shop)</td><td>~4,500</td><td>$110</td><td>$140</td><td>$249</td></tr>
+      <tr><td>50 (moderate)</td><td>~11,000</td><td>$240</td><td>$270</td><td>$369</td></tr>
+      <tr><td>100 (busy)</td><td>~21,000</td><td>$440</td><td>$470</td><td>$569</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>The metering's shape is the issue.</strong> The cost rises with how much the app is actually used — exactly the wrong shape for a tool designed for daily, frequent floor use. Successful adoption makes the cost worse.</p>
+</section>
+
+<section class="page-break">
+  <h2>Option A — Glide (Business tier)</h2>
+  <div class="option-card">
+    <h3>Stay on Glide; upgrade to Business tier ($249/mo base)</h3>
+    <p>Continue the build already in progress, upgraded to Business tier for headroom and full feature access (Call API, native Airtable integration, Glide API).</p>
+
+    <div class="pros-cons">
+      <div class="pros">
+        <h4>Pros</h4>
+        <ul>
+          <li>Most build work already complete — fastest to production</li>
+          <li>Best mobile-app feel out of the box — Glide is mobile-first</li>
+          <li>Polished iPad PWA install (icon, splash, full-screen)</li>
+          <li>Real-time UI reactivity — taps update screen instantly</li>
+          <li>Native Airtable integration unlocked (eliminates one Make scenario)</li>
+          <li>Client can edit screens themselves later</li>
+          <li>Lowest-friction long-term maintenance</li>
+        </ul>
+      </div>
+      <div class="cons">
+        <h4>Cons</h4>
+        <ul>
+          <li>Highest recurring cost: $249/mo base + per-use overage</li>
+          <li>Cost rises with usage — busy days are expensive days</li>
+          <li>At 100 interactions/day: ~$570/mo</li>
+          <li>M2 (deal logging) will increase update consumption further</li>
+          <li>Locked into Glide's component library and constraints</li>
+          <li>Platform lock-in — migrating away later is a full rebuild</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="cost-line">
+      Year-1 estimate at 50 interactions/day: <strong>~$4,400</strong> &nbsp;|&nbsp; At 100/day: <strong>~$6,800</strong>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Option B — Softr</h2>
+  <div class="option-card not-recommended">
+    <h3>Migrate to Softr (Basic or Professional tier)</h3>
+    <p>Switch to a competing no-code platform with native Airtable integration on lower tiers and fixed-tier pricing without Glide-style per-action metering for typical app use.</p>
+
+    <div class="pros-cons">
+      <div class="pros">
+        <h4>Pros</h4>
+        <ul>
+          <li>Substantially lower recurring cost ($59–167/mo)</li>
+          <li>No per-update meter punishing app usage</li>
+          <li>Native Airtable on entry tier (eliminates config-load Make scenario)</li>
+          <li>Still no-code — client can edit screens later</li>
+          <li>Existing Make scenarios work as-originally-designed</li>
+        </ul>
+      </div>
+      <div class="cons">
+        <h4>Cons</h4>
+        <ul>
+          <li><strong>Real-time reactivity gap</strong> — Calculate Total round-trip likely 7–17 seconds (vs ~2s on Glide) due to Airtable polling delays. This is the largest concrete UX risk for a floor tool.</li>
+          <li>Less polished mobile-app feel — Softr is portal-oriented; PWAs feel like installed websites rather than native apps</li>
+          <li>Touch-optimized components are weaker — finger-friendly tap targets need custom CSS</li>
+          <li>Throw away Glide work to date (small loss)</li>
+          <li>Workflow action metering exists; needs validation against floor-staff volume</li>
+          <li>Mobile-app maturity lags Glide</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="cost-line">
+      Year-1 estimate: <strong>~$700</strong> (Basic) to <strong>~$2,000</strong> (Professional)
+    </div>
+  </div>
+</section>
+
+<section class="page-break">
+  <h2>Option C — Custom-built PWA</h2>
+  <div class="option-card">
+    <h3>Develop a purpose-built progressive web app</h3>
+    <p>Build a custom iPad PWA using modern web technologies (React + Tailwind), deployed on Vercel free tier. Functions identically to Glide/Softr in user experience but is a custom-coded application with no platform constraints.</p>
+
+    <div class="pros-cons">
+      <div class="pros">
+        <h4>Pros</h4>
+        <ul>
+          <li>Zero recurring cost — Vercel free tier handles this scale</li>
+          <li>Full UX control — finger-perfect tap targets, custom keypads, native feel</li>
+          <li>Fastest possible Calculate Total round-trip (~2s)</li>
+          <li>No platform metering, ever</li>
+          <li>Cheapest option after build cost is amortized</li>
+          <li>Architecture is durable through M2 and beyond — no platform lock-in</li>
+          <li>Existing Make scenarios work as-originally-designed</li>
+        </ul>
+      </div>
+      <div class="cons">
+        <h4>Cons</h4>
+        <ul>
+          <li>One-time build cost — ~16–32 hours of development time</li>
+          <li><strong>Client cannot edit screens themselves</strong> — every change requires developer involvement</li>
+          <li>Maintenance burden owned by you/dev (dependency updates, hosting)</li>
+          <li>Initial GitHub + Vercel setup required (one-time, ~30 min)</li>
+          <li>Loss of no-code editability is a permanent trade-off</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="cost-line">
+      Year-1 estimate: <strong>build cost (one-time, ~$800–$3,200 at typical dev rates)</strong> + ~$0/mo recurring
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Side-by-side comparison</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width:32%">Dimension</th>
+        <th style="width:22%">Glide Business</th>
+        <th style="width:22%">Softr</th>
+        <th style="width:22%">Custom PWA</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Time to ship M1</td>
+        <td><span class="check">Lowest</span> (~4–8 hrs remaining)</td>
+        <td>Medium (~8–16 hrs remaining)</td>
+        <td>Highest (~16–32 hrs)</td>
+      </tr>
+      <tr>
+        <td>Recurring monthly cost</td>
+        <td class="warn">$249–570/mo</td>
+        <td>$59–167/mo</td>
+        <td class="check">~$0/mo</td>
+      </tr>
+      <tr>
+        <td>iPad app polish</td>
+        <td><span class="star">★★★★★</span></td>
+        <td><span class="star">★★★</span></td>
+        <td><span class="star">★★★★★</span> (with build effort)</td>
+      </tr>
+      <tr>
+        <td>Real-time UX (Calculate Total)</td>
+        <td><span class="star">★★★★★</span> (~2s)</td>
+        <td><span class="star">★★</span> (7–17s likely)</td>
+        <td><span class="star">★★★★★</span> (~2s)</td>
+      </tr>
+      <tr>
+        <td>Self-edit by client later</td>
+        <td><span class="check">Yes</span></td>
+        <td><span class="check">Yes</span></td>
+        <td><span class="cross">No</span> — dev required</td>
+      </tr>
+      <tr>
+        <td>Cost stable as use grows</td>
+        <td><span class="cross">No</span> — scales with use</td>
+        <td><span class="check">Mostly yes</span></td>
+        <td><span class="check">Yes</span></td>
+      </tr>
+      <tr>
+        <td>Future-proof through M2+</td>
+        <td><span class="star">★★★</span></td>
+        <td><span class="star">★★★</span></td>
+        <td><span class="star">★★★★★</span></td>
+      </tr>
+      <tr>
+        <td>Platform lock-in risk</td>
+        <td>High</td>
+        <td>Medium</td>
+        <td>None</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="page-break">
+  <div class="recommendation-box">
+    <h2>Recommendation</h2>
+    <p>The decision narrows to <strong>two viable paths</strong>, distinguished by which trade-off matters more:</p>
+
+    <h3>Choose Glide Business ($249/mo + overage) if:</h3>
+    <ul>
+      <li>The fastest path to production matters most</li>
+      <li>Self-edit ability for the client is high-value (they'll tweak screens themselves)</li>
+      <li>Recurring cost is acceptable as part of operating expense</li>
+      <li>Volume is expected to stay low to moderate (under 50 interactions/day)</li>
+      <li>Client values "no engineering dependency" highly</li>
+    </ul>
+
+    <h3>Choose Custom PWA if:</h3>
+    <ul>
+      <li>Long-term cost discipline matters more than self-edit ability</li>
+      <li>Client trusts the dev/agency relationship for future changes</li>
+      <li>Volume is expected to be moderate to heavy (50+ interactions/day) — overage savings recoup build cost quickly</li>
+      <li>App horizon is medium-to-long — custom PWA's economics improve over time</li>
+      <li>Client values polish and UX control highly (custom keypads, gesture support, etc.)</li>
+    </ul>
+
+    <h3>Why Softr is not recommended</h3>
+    <p>The reactivity gap on Calculate Total is the single most concrete UX risk for a tool used live in front of a customer. The cost savings vs Glide ($150–400/mo) don't fully compensate for that downgrade, and the build effort to mitigate UX issues is comparable to the custom PWA route — without the polish payoff. Softr is a strong platform for portals and internal tools, but it's the wrong fit for a fast, daily-use floor calculator on iPad.</p>
+  </div>
+</section>
+
+<section>
+  <h2>What we need from the client to decide</h2>
+  <ol>
+    <li><strong>Expected daily usage volume</strong> — number of customer interactions per day, on average and on busy days. Confirms cost projections under each option.</li>
+    <li><strong>Recurring vs one-time cost preference</strong> — is "$249–570/mo forever" easier to absorb than "one-time build cost now, near-zero after"?</li>
+    <li><strong>Self-edit priority</strong> — does the client want to modify screens themselves without involving us, or are they comfortable routing changes through us?</li>
+    <li><strong>Time horizon</strong> — how long is this app expected to be in use? (Custom PWA's economics improve significantly over multi-year horizons.)</li>
+    <li><strong>Client's tolerance for the M1 timeline</strong> — Glide finishes ~1 day faster than Custom PWA. Does that matter?</li>
+  </ol>
+
+  <p>Once the client weighs these five points, the choice between Glide Business and Custom PWA should be clear-cut. Either is a defensible production choice; the right answer depends on which trade-off the client prefers.</p>
+</section>
+
+<section>
+  <h2>Appendix — Build status as of 27 April 2026</h2>
+  <table>
+    <thead><tr><th>Phase</th><th>Description</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Airtable base + config tables seeded</td><td><span class="check">Complete</span></td></tr>
+      <tr><td>2</td><td>Make.com bulk-calc scenario (live pricing math)</td><td><span class="check">Complete and tested</span></td></tr>
+      <tr><td>2.5</td><td>Make.com config-load scenario</td><td><span class="check">Complete and tested</span></td></tr>
+      <tr><td>3</td><td>iPad frontend (Glide app)</td><td><span class="warn">Paused — pending platform decision</span></td></tr>
+      <tr><td>iPad smoke test</td><td>End-to-end test on live spot prices</td><td>Pending</td></tr>
+    </tbody>
+  </table>
+  <p><small>Make and Airtable layers are unaffected by the platform decision — those scenarios will continue to work as-designed under any of the three options.</small></p>
+</section>
+
+</body>
+</html>
