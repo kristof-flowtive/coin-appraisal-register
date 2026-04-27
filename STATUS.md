@@ -1,6 +1,6 @@
 # M1 Build Status
 
-Last updated: **2026-04-26**.
+Last updated: **2026-04-27**.
 
 This is the orientation doc for the Coin Appraisal Register M1 build. If you're picking up this project on a new machine, **read this first**, then go to [glide/screens.md](glide/screens.md) for the next-step build guide.
 
@@ -21,9 +21,12 @@ Full architecture in [docs/architecture.md](docs/architecture.md). Pricing math 
 |---|---|---|
 | **1 — Airtable base** | ✅ done | `Config_Margins` (4 rows), `Config_CoinTypes` (24 rows), `Config_Reps` (empty pending client). Import order: [airtable/schema.md](airtable/schema.md). |
 | **2 — Make `bulk-calc` scenario** | ✅ done | Tested, active. Working blueprint committed: [make/bulk-calc.v1.blueprint.json](make/bulk-calc.v1.blueprint.json). |
-| **2.5 — Make `config-load` scenario** | ⏳ next | Pre-built blueprint at [make/config-load.v1.blueprint.json](make/config-load.v1.blueprint.json) — needs import + connection mapping + test. |
-| **3 — Glide app** | ⏳ pending | Build guide at [glide/screens.md](glide/screens.md). Phase 2.5 must complete first. |
-| **iPad smoke test** | ⏳ pending | End-to-end against real spot prices and a real customer-style coin bag. |
+| **2.5 — Make `config-load` scenario** | ✅ done | Imported, tested, active. Webhook URL saved externally by builder (not in repo). |
+| **3A — Glide app created** | ✅ done | "Coin Appraisal Register" on Explorer plan. Workspace shows "My Team" — confirm with client this is theirs before publish. |
+| **3B — Big Tables set up** | ✅ done | `CoinTypes` (6 cols), `Reps` (2 cols), `Cart` (8 cols + `owner_email` configured as Row Owner). Default starter table deleted. |
+| **3C — Refresh Config workflow** | ⏳ in progress | Building in Glide's **Workflows** tab. Stopped at: open Workflows → click + New workflow → screenshot the empty editor for the assistant to confirm trigger options. |
+| **3D — Calculator screen + Add Coin form** | ⏳ pending | See [glide/screens.md](glide/screens.md#L181). |
+| **3E–H — Smoke test, iPad install, polish, sign-off** | ⏳ pending | |
 
 ## Architecture pivot (2026-04-26)
 
@@ -76,6 +79,19 @@ The repo holds specs and blueprints. These live in your accounts and need to be 
 | **Margin confirmation** | Client | Seeded at 0.30 across silver/gold/platinum. Legacy effective rate was ~0.263. Worth confirming before staff use it on the floor. |
 | **Branding** | Client | App name, square logo (PNG ≥ 512×512), accent color. Not blocking the build, blocking sign-off. |
 
+## Build notes from prior sessions (gotchas not in screens.md)
+
+- **Make Module 6 (`json:CreateJSON`) imports with `type: null`.** Data structures don't carry across accounts. Fix on import: open Module 6 → Data structure → **Add** → **Generator** tab → paste a sample of the response JSON → Save. Once the structure exists, the `coin_types` and `reps` mappings re-appear.
+- **Empty Airtable rows leak into the `reps` array** as `[{"id": null, "name": null}]` even with `{active} = TRUE()` filter. Fix: delete all default placeholder rows from `Config_Reps` in Airtable; the filter alone isn't enough.
+- **Glide Row Owners ≠ "Column is user-specific."** They're different features. For the user-specific Cart, the working path is: add a Text or Email column called `owner_email` → right-click the column header → **Make Row Owner**. Visual confirmation: column header turns teal with an `@` icon. The "Column is user-specific" checkbox is a different feature (per-user values on shared rows) and won't isolate carts between reps.
+- **Glide's `Users` table** appeared on app creation but vanished after the first table operations. Not blocking — Glide recreates it when sign-in is enabled. Worth noting for Phase 3F (iPad install with auth).
+
+## Resume here (2026-04-27 stopping point)
+
+Open Glide → click **Workflows** in the top nav → **+ New workflow** → screenshot the empty workflow editor (specifically: what trigger options does it offer?). The assistant will then walk through the 5-step workflow: Call API to `config-load` webhook → Delete all rows in `CoinTypes` → For each item in `response.coin_types` add row → Delete all rows in `Reps` → For each item in `response.reps` add row.
+
+The `config-load` webhook URL is needed for step 1 — make sure it's accessible on the new machine.
+
 ## Next action
 
-Open [glide/screens.md](glide/screens.md) and start at "Phase 2.5 — `config-load` Make scenario."
+Read this file, then jump to "Resume here" above.
