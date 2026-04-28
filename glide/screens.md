@@ -1,3 +1,7 @@
+> ⚠️ **ARCHIVED — DO NOT FOLLOW.** This document targets the abandoned Glide build path. The active build guide is [../docs/pwa-build-plan.md](../docs/pwa-build-plan.md). Kept here for historical context (Make scenario debugging notes, Glide-specific gotchas) — see [../decisions/platform-decision.pdf](../decisions/platform-decision.pdf) for why we pivoted away from Glide.
+
+---
+
 # Glide app build guide — Phase 2.5 + Phase 3
 
 This is the canonical step-by-step for finishing M1 from where Phase 2 (the `bulk-calc` Make scenario) left off. Read [STATUS.md](../STATUS.md) first if you haven't.

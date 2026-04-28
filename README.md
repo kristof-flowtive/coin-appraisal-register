@@ -6,12 +6,14 @@ A proprietary appraisal register app replacing a legacy Google Sheet workflow. F
 
 | Layer | Technology |
 |---|---|
-| Front-end | Glide (no-code PWA) — installed to iPad home screen + works in laptop browser |
+| Front-end | Custom PWA (React + Vite + TypeScript + Tailwind), hosted on Vercel — installed to iPad home screen + works in laptop browser |
 | Workflow engine | Make.com |
 | Data + admin | Airtable |
 | External APIs | metals-api.com, PCGS CoinFacts, CDN Greysheet, Apify (eBay Sold Listings) |
 
-**Design contract:** All business values — margins, coin list, rep list, raw coin overrides, payment methods — live in Airtable. The admin never touches a Make scenario to change pricing or configuration. API keys live only in Make under client credentials.
+**Design contract:** All business values — margins, coin list, rep list, raw coin overrides, payment methods — live in Airtable. The admin never touches a Make scenario to change pricing or configuration. API keys live only in Make under client credentials. The PWA holds no secrets — only the two Make webhook URLs.
+
+> The frontend originally targeted Glide (no-code). After hitting platform-tier and per-use metering constraints during the M1 build, the client chose a custom PWA — see [decisions/platform-decision.pdf](decisions/platform-decision.pdf) for the decision context.
 
 ## The three engines
 
@@ -29,12 +31,14 @@ Every completed deal writes to Airtable with rep, customer, DL capture (hard blo
 ## Repo layout
 
 ```
-/docs          architecture, data model, API integration notes
+/docs          architecture, data model, API integration notes, PWA build plan
 /airtable      schema doc + seed CSVs for admin tables
-/make          exported scenario blueprints (added during build)
-/glide         Glide app build doc, screen-by-screen spec, and template-copy link (added during build)
+/make          exported scenario blueprints
+/decisions     client-facing decision documents (platform choice, etc.)
+/web           custom PWA source (created during Phase 4A)
+/glide         ARCHIVED — original Glide build spec, kept for historical context only
 ```
 
 ## Handover principle
 
-Any future developer should be able to clone this repo, read `/docs`, import the Make blueprints, and rebuild the Glide app from the spec in `/glide` (or duplicate it from the template-copy link). No tribal knowledge, no hidden configuration. The Glide app itself is not in version control — Glide doesn't expose project files — so `/glide` documents what was built so it can be reproduced.
+Any future developer should be able to clone this repo, read `/docs`, import the Make blueprints, install the PWA dependencies in `/web`, set the two webhook URLs as env vars, and run the app. No tribal knowledge, no hidden configuration. The Vercel deployment is auto-rebuilt from the `main` branch — there's no manual deploy step.
