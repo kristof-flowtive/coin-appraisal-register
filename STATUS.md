@@ -27,21 +27,21 @@ The ~1 hour of Glide work from Phase 3A/3B is discarded. The Glide app itself ca
 
 | Phase | Status | What it produced |
 |---|---|---|
-| **1 — Airtable base** | ✅ done | `Config_Margins` (4 rows), `Config_CoinTypes` (24 rows), `Config_Reps` (empty pending client). Import order: [airtable/schema.md](airtable/schema.md). |
+| **1 — Airtable base** | ✅ done | `Config_Margins` (4 rows), `Config_CoinTypes` (24 rows), `Config_Reps` (Adam, Amy, John). Import order: [airtable/schema.md](airtable/schema.md). |
 | **2 — Make `bulk-calc` scenario** | ✅ done | Tested, active. Working blueprint committed: [make/bulk-calc.v1.blueprint.json](make/bulk-calc.v1.blueprint.json). |
 | **2.5 — Make `config-load` scenario** | ✅ done | Imported, tested, active. Webhook URL saved externally by builder (not in repo). |
 | **3 — Glide app** | 🗑️ abandoned | Path 2 architecture broke on Glide Explorer constraints. Glide app (skeleton only) can be deleted from client workspace. |
-| **4A — PWA scaffold** | ⏳ next | Vite + React + TS + Tailwind project in `/web`, PWA plugin wired, env vars for both webhooks. |
-| **4B — API client + cart state** | ⏳ pending | Typed wrappers around `config-load` and `bulk-calc`; cart in React state with localStorage persistence. |
-| **4C — Calculator screen** | ⏳ pending | Rep dropdown, cart list, total, Calculate / New Bag / Refresh Config buttons. |
-| **4D — Add Coin form** | ⏳ pending | Modal: coin picker grouped by metal, conditional quantity-vs-grams input. |
-| **4E — PWA polish** | ⏳ pending | Manifest + icons + splash, tap targets, numeric keyboards, loading + error states. |
-| **4F.1 — Staging deploy** | ⏳ pending | Push to dev's GitHub, deploy to dev's Vercel for client preview + iPad smoke testing. |
-| **4F.2 — Transfer to client** | ⏳ pending | Awaiting client GitHub + Vercel access. Transfer repo, set up fresh Vercel project under client account, re-install on iPads. |
-| **4G — iPad install + smoke test** | ⏳ pending | Add to Home Screen on iPad, full-screen confirmed, end-to-end test against live spot. |
-| **4H — Sign-off** | ⏳ pending | Checklist in [docs/pwa-build-plan.md](docs/pwa-build-plan.md). |
+| **4A — PWA scaffold** | ✅ done | Vite + React + TS + Tailwind in `/web`, PWA plugin wired, env vars for both webhooks. (commit `efcf4ad`) |
+| **4B — API client + cart state** | ✅ done | Typed wrappers + `useConfig` / `useCart` / `useSession` hooks; localStorage persistence. (commit `0e781bd`) |
+| **4C — Calculator screen** | ✅ done | Rep dropdown, cart list, total, Calculate / New Bag / Refresh Config + rep-change auto-clear. (commit `fed29b6`) |
+| **4D — Add Coin form** | ✅ done | Bottom-sheet modal, picker grouped by metal, conditional qty/grams input. (commit `901fe0c`) |
+| **4E — PWA polish** | ✅ done | Manifest + icons + iOS meta tags, tap targets ≥44px, NetworkOnly SW for webhooks, network-vs-HTTP error copy, safe-area inset support. (commit `d366adc`) |
+| **4F.1 — Staging deploy** | ✅ done | Live at https://coin-appraisal-register.vercel.app under dev's Vercel; auto-deploys from `main`. Manifest + SW verified in Chrome DevTools. |
+| **4F.2 — Transfer to client** | ⏳ blocked | Awaiting client GitHub + Vercel access. ~30 min once unblocked: transfer repo, fresh Vercel project under client account, re-install on iPads. See [docs/pwa-build-plan.md](docs/pwa-build-plan.md) §4F.2. |
+| **4G — iPad install + smoke test** | ⏳ blocked | Awaiting iPad hardware. Checklist ready in [docs/4G-ipad-smoke-test.md](docs/4G-ipad-smoke-test.md) — run through it once an iPad is on hand. |
+| **4H — Sign-off** | ⏳ blocked | Depends on 4G passing + branding assets landing (logo, accent color, app name). Checklist in [docs/pwa-build-plan.md](docs/pwa-build-plan.md) §4H. |
 
-Estimated build effort: **16–32 hours** total for Phases 4A–4H (per the platform decision PDF).
+The PWA build is functionally complete. Remaining phases are hardware-/client-gated, not code-gated.
 
 ## Files in this repo
 
