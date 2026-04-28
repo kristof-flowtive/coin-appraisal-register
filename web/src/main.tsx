@@ -10,15 +10,6 @@ createRoot(document.getElementById('root')!).render(
   </StrictMode>,
 )
 
-declare global {
-  interface Window {
-    __test?: {
-      loadConfig: typeof loadConfig
-      calculateBulk: typeof calculateBulk
-    }
-  }
-}
-
 if (import.meta.env.DEV) {
-  window.__test = { loadConfig, calculateBulk }
+  window.__test = { ...(window.__test ?? {}), loadConfig, calculateBulk }
 }
