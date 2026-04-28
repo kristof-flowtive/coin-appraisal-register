@@ -4,15 +4,37 @@ import type {
   ConfigLoadResponse,
 } from './types'
 
+export class NetworkError extends Error {
+  constructor() {
+    super('Network unavailable')
+    this.name = 'NetworkError'
+  }
+}
+
+export class HttpError extends Error {
+  status: number
+  constructor(status: number, message: string) {
+    super(message)
+    this.name = 'HttpError'
+    this.status = status
+  }
+}
+
 async function postJSON<T>(url: string, body: unknown): Promise<T> {
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body ?? {}),
-  })
+  let res: Response
+  try {
+    res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body ?? {}),
+    })
+  } catch {
+    throw new NetworkError()
+  }
   if (!res.ok) {
     const text = await res.text().catch(() => '')
-    throw new Error(
+    throw new HttpError(
+      res.status,
       `HTTP ${res.status} ${res.statusText}${text ? `: ${text}` : ''}`,
     )
   }

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { calculateBulk } from '../api/client'
+import { calculateBulk, HttpError, NetworkError } from '../api/client'
 import { cartLineToRequestItem } from '../api/types'
 import { useCart } from '../state/useCart'
 import { useConfig } from '../state/useConfig'
@@ -43,7 +43,19 @@ export function CalculatorScreen() {
       const result = await calculateBulk(items)
       session.setLastCalc(result)
     } catch (err) {
-      setCalcError(err instanceof Error ? err.message : String(err))
+      if (err instanceof NetworkError) {
+        setCalcError(
+          'No internet connection. Check Wi-Fi and try again — your bag is saved.',
+        )
+      } else if (err instanceof HttpError) {
+        setCalcError(
+          `The pricing service returned an error (HTTP ${err.status}). Try again, or contact admin if it keeps happening.`,
+        )
+      } else {
+        setCalcError(
+          err instanceof Error ? err.message : String(err),
+        )
+      }
     } finally {
       setCalcLoading(false)
     }
@@ -63,15 +75,18 @@ export function CalculatorScreen() {
   const spot = session.lastCalc?.spot ?? null
 
   return (
-    <main className="min-h-dvh flex flex-col bg-slate-50 pb-40">
-      <header className="px-4 py-3 bg-white border-b border-slate-200 flex items-center justify-between">
-        <h1 className="text-lg font-semibold text-slate-900">
+    <main
+      className="min-h-dvh flex flex-col bg-slate-50 pb-40"
+      style={{ overscrollBehavior: 'contain' }}
+    >
+      <header className="px-4 py-3 bg-white border-b border-slate-200 flex items-center justify-between gap-3">
+        <h1 className="text-lg font-semibold text-slate-900 truncate">
           Coin Appraisal Register
         </h1>
         <button
           onClick={() => void config.refresh()}
           disabled={config.loading}
-          className="px-3 py-2 text-sm rounded-md bg-slate-100 hover:bg-slate-200 disabled:opacity-50"
+          className="min-h-11 px-3 text-sm rounded-md bg-slate-100 hover:bg-slate-200 disabled:opacity-50 shrink-0"
           title="Refresh config from Airtable"
         >
           {config.loading ? 'Refreshing…' : 'Refresh Config'}
@@ -107,7 +122,7 @@ export function CalculatorScreen() {
           id="rep-select"
           value={session.selectedRepId ?? ''}
           onChange={(e) => session.setSelectedRepId(e.target.value || null)}
-          className="w-full px-3 py-2 rounded-md border border-slate-300 bg-white text-base"
+          className="w-full min-h-11 px-3 rounded-md border border-slate-300 bg-white text-base"
         >
           <option value="">Select rep…</option>
           {config.reps.map((r) => (
@@ -134,7 +149,7 @@ export function CalculatorScreen() {
           <button
             onClick={() => setShowAddCoin(true)}
             disabled={config.loading || config.coinTypes.length === 0}
-            className="px-3 py-1.5 text-sm rounded-md bg-slate-900 text-white hover:bg-slate-800 disabled:bg-slate-300 disabled:text-slate-500"
+            className="min-h-11 px-4 text-sm rounded-md bg-slate-900 text-white hover:bg-slate-800 disabled:bg-slate-300 disabled:text-slate-500"
           >
             Add Coin
           </button>
@@ -174,12 +189,12 @@ export function CalculatorScreen() {
                       const v = parseFloat(e.target.value)
                       if (!Number.isNaN(v) && v >= 0) cart.updateLine(line.id, v)
                     }}
-                    className="w-20 px-2 py-1 text-sm rounded border border-slate-300"
+                    className="w-20 min-h-11 px-2 text-sm rounded border border-slate-300"
                     aria-label={`Edit ${line.name}`}
                   />
                   <button
                     onClick={() => cart.removeLine(line.id)}
-                    className="text-slate-400 hover:text-red-500 px-2 py-1 text-lg leading-none"
+                    className="text-slate-400 hover:text-red-500 min-h-11 min-w-11 text-2xl leading-none"
                     aria-label={`Remove ${line.name}`}
                   >
                     ×
@@ -191,24 +206,42 @@ export function CalculatorScreen() {
         )}
       </section>
 
-      <div className="fixed bottom-0 inset-x-0 bg-white border-t border-slate-200 shadow-lg">
-        <div className="px-4 pt-3 pb-2 flex items-baseline justify-between">
+      <div
+        className="fixed bottom-0 inset-x-0 bg-white border-t border-slate-200 shadow-lg"
+        style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
+      >
+        <div className="px-4 pt-3 pb-1 flex items-baseline justify-between">
           <span className="text-sm text-slate-600">Total</span>
           <span className="text-3xl font-bold text-slate-900 tabular-nums">
             {usd.format(total)}
           </span>
         </div>
-        <div className="px-4 pb-4 flex gap-2">
+        {!canCalculate && !calcLoading && (
+          <div className="px-4 pb-1 text-xs text-slate-500 text-right">
+            {session.selectedRepId === null
+              ? 'Select a rep to calculate.'
+              : cart.lines.length === 0
+                ? 'Add a coin to calculate.'
+                : null}
+          </div>
+        )}
+        <div className="px-4 pb-3 pt-2 flex gap-2">
           <button
             onClick={() => void handleCalculate()}
             disabled={!canCalculate}
-            className="flex-1 py-3 rounded-md bg-emerald-600 text-white text-base font-semibold disabled:bg-slate-300 disabled:text-slate-500 hover:bg-emerald-700"
+            className="flex-1 min-h-12 py-3 rounded-md bg-emerald-600 text-white text-base font-semibold disabled:bg-slate-300 disabled:text-slate-500 hover:bg-emerald-700 inline-flex items-center justify-center gap-2"
           >
+            {calcLoading && (
+              <span
+                className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"
+                aria-hidden="true"
+              />
+            )}
             {calcLoading ? 'Calculating…' : 'Calculate Total'}
           </button>
           <button
             onClick={handleNewBag}
-            className="px-4 py-3 rounded-md border border-slate-300 text-slate-700 text-sm hover:bg-slate-100"
+            className="min-h-12 px-4 rounded-md border border-slate-300 text-slate-700 text-sm hover:bg-slate-100"
           >
             New Bag
           </button>

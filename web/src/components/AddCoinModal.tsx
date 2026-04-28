@@ -91,13 +91,16 @@ export function AddCoinModal({
           <button
             onClick={onClose}
             aria-label="Close"
-            className="text-slate-500 hover:text-slate-700 px-2 text-2xl leading-none"
+            className="text-slate-500 hover:text-slate-700 min-h-11 min-w-11 text-2xl leading-none"
           >
             ×
           </button>
         </header>
 
-        <div className="flex-1 overflow-y-auto px-4 py-3">
+        <div
+          className="flex-1 overflow-y-auto px-4 py-3"
+          style={{ overscrollBehavior: 'contain' }}
+        >
           {METAL_ORDER.map((metal) => {
             const items = grouped[metal]
             if (items.length === 0) return null
@@ -114,7 +117,7 @@ export function AddCoinModal({
                         <button
                           type="button"
                           onClick={() => setSelectedId(c.id)}
-                          className={`w-full px-3 py-3 text-left flex items-center justify-between gap-3 min-h-[44px] ${
+                          className={`w-full px-3 py-3 text-left flex items-center justify-between gap-3 min-h-12 ${
                             isSelected
                               ? 'bg-emerald-50 ring-1 ring-emerald-500'
                               : 'hover:bg-slate-50'
@@ -165,24 +168,27 @@ export function AddCoinModal({
               placeholder={
                 selected.priced_by === 'each_metal' ? 'e.g. 10' : 'e.g. 23.4'
               }
-              className="w-full px-3 py-2 rounded-md border border-slate-300 bg-white text-base"
+              className="w-full min-h-12 px-3 rounded-md border border-slate-300 bg-white text-base"
             />
           </div>
         )}
 
-        <footer className="px-4 py-3 border-t border-slate-200 flex gap-2 bg-white">
+        <footer
+          className="px-4 py-3 border-t border-slate-200 flex gap-2 bg-white"
+          style={{ paddingBottom: 'calc(0.75rem + env(safe-area-inset-bottom, 0px))' }}
+        >
           <button
             type="button"
             onClick={handleAdd}
             disabled={!canAdd}
-            className="flex-1 py-3 rounded-md bg-emerald-600 text-white text-base font-semibold disabled:bg-slate-300 disabled:text-slate-500 hover:bg-emerald-700"
+            className="flex-1 min-h-12 py-3 rounded-md bg-emerald-600 text-white text-base font-semibold disabled:bg-slate-300 disabled:text-slate-500 hover:bg-emerald-700"
           >
             Add to Bag
           </button>
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-3 rounded-md border border-slate-300 text-slate-700 hover:bg-slate-100"
+            className="min-h-12 px-4 rounded-md border border-slate-300 text-slate-700 hover:bg-slate-100"
           >
             Cancel
           </button>
