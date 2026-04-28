@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Coin Appraisal Register — M1 Handover</title>
+<style>
+  @page { size: A4; margin: 18mm 16mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.5;
+    color: #1a1a1a;
+    margin: 0;
+    padding: 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .cover {
+    page-break-after: always;
+    padding: 60mm 0 0 0;
+    border-top: 4px solid #c9a227;
+  }
+  .cover .eyebrow {
+    font-size: 9pt;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #c9a227;
+    margin-bottom: 8mm;
+    font-weight: 600;
+  }
+  .cover h1 {
+    font-size: 28pt;
+    line-height: 1.15;
+    margin: 0 0 4mm 0;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+  .cover .subtitle {
+    font-size: 13pt;
+    color: #555;
+    margin-bottom: 30mm;
+    font-weight: 300;
+  }
+  .cover .meta {
+    font-size: 9.5pt;
+    color: #555;
+    border-top: 1px solid #ddd;
+    padding-top: 6mm;
+  }
+  .cover .meta dt { font-weight: 600; color: #1a1a1a; float: left; width: 35mm; clear: left; }
+  .cover .meta dd { margin: 0 0 3mm 35mm; }
+  h2 {
+    font-size: 15pt;
+    margin: 9mm 0 4mm 0;
+    padding-bottom: 2mm;
+    border-bottom: 2px solid #c9a227;
+    font-weight: 600;
+    page-break-after: avoid;
+  }
+  h3 {
+    font-size: 12pt;
+    margin: 6mm 0 2mm 0;
+    font-weight: 600;
+    page-break-after: avoid;
+  }
+  p { margin: 0 0 3mm 0; }
+  ul, ol { margin: 0 0 3mm 0; padding-left: 6mm; }
+  li { margin-bottom: 1.5mm; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 3mm 0 5mm 0;
+    font-size: 9.5pt;
+    page-break-inside: avoid;
+  }
+  th {
+    background: #f5f1e6;
+    text-align: left;
+    padding: 2.5mm 3mm;
+    border-bottom: 2px solid #c9a227;
+    font-weight: 600;
+  }
+  td {
+    padding: 2.5mm 3mm;
+    border-bottom: 1px solid #e6e6e6;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: #fafafa; }
+  .summary-box {
+    background: #f5f1e6;
+    border-left: 4px solid #c9a227;
+    padding: 5mm 6mm;
+    margin: 4mm 0 6mm 0;
+    page-break-inside: avoid;
+  }
+  .summary-box p:last-child { margin-bottom: 0; }
+  .url-box {
+    background: #fffbef;
+    border: 1.5px solid #c9a227;
+    padding: 4mm 5mm;
+    margin: 3mm 0 5mm 0;
+    border-radius: 3px;
+    font-size: 11pt;
+    text-align: center;
+    page-break-inside: avoid;
+  }
+  .url-box .label {
+    font-size: 8.5pt;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #8a6a00;
+    margin-bottom: 1.5mm;
+    font-weight: 600;
+  }
+  .url-box .url {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 11pt;
+    font-weight: 600;
+    word-break: break-all;
+  }
+  .step {
+    margin: 0 0 4mm 0;
+    padding-left: 12mm;
+    position: relative;
+    page-break-inside: avoid;
+  }
+  .step .num {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 8mm;
+    height: 8mm;
+    background: #c9a227;
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 8mm;
+    font-weight: 700;
+    font-size: 9.5pt;
+  }
+  .step h4 {
+    margin: 0 0 1mm 0;
+    font-size: 10.5pt;
+    font-weight: 600;
+  }
+  .step p { margin: 0 0 1.5mm 0; font-size: 10pt; }
+  .step .note { color: #666; font-size: 9pt; font-style: italic; }
+  .footer {
+    margin-top: 12mm;
+    padding-top: 4mm;
+    border-top: 1px solid #ddd;
+    font-size: 8.5pt;
+    color: #888;
+    text-align: center;
+  }
+  .check { color: #2d6a3a; font-weight: 600; }
+  .muted { color: #888; }
+  small { color: #666; font-size: 9pt; }
+</style>
+</head>
+<body>
+
+<section class="cover">
+  <div class="eyebrow">Project Delivery — Milestone 1</div>
+  <h1>Coin Appraisal Register</h1>
+  <p class="subtitle">Floor-staff bullion &amp; coin pricing — live on iPad and desktop.</p>
+  <dl class="meta">
+    <dt>Delivered</dt><dd>April 2026</dd>
+    <dt>Milestone</dt><dd>M1 — Bulk Silver &amp; Metals Calculator</dd>
+    <dt>Built by</dt><dd>Flowtive (kristof@getflowtive.com)</dd>
+    <dt>Live URL</dt><dd>https://coin-appraisal-register.vercel.app</dd>
+  </dl>
+</section>
+
+<h2>What we built</h2>
+
+<p>A purpose-built iPad app that replaces your legacy spreadsheet workflow for bulk silver, gold, and platinum buys. Floor staff select themselves from a dropdown, add the coins or bullion in front of them, and tap <strong>Calculate Total</strong> to get an offer computed against the current market spot price and your margin policy.</p>
+
+<p>The app is a <strong>Progressive Web App (PWA)</strong> — it lives at a web URL, but installs to the iPad home screen and runs full-screen, like a native app. No App Store approval, no distribution headache. Same URL, same install, on every iPad.</p>
+
+<div class="summary-box">
+  <p><strong>Single design contract:</strong> margins, the coin list, and the rep list all live in <strong>your Airtable base</strong>. You change a margin or add a rep in Airtable, and the next time floor staff tap Calculate, the new value is reflected. There is no developer in the loop for routine changes.</p>
+</div>
+
+<h2>What's included</h2>
+
+<h3>Engine 1 — Bulk Silver &amp; Metals Calculator</h3>
+
+<ul>
+  <li><strong>Rep selector</strong> — staff pick themselves from a dropdown before pricing a deal. Switching reps mid-shift automatically clears any in-progress bag, so one rep's items can never carry into another rep's deal.</li>
+  <li><strong>Coin &amp; bullion picker</strong> — 24 coin types preloaded, grouped Silver / Gold / Platinum. Tap a coin, type the quantity (or weight in grams for bulk), tap Add to Bag.</li>
+  <li><strong>Per-count and per-weight pricing</strong> — Roosevelt dimes, Morgan dollars, war nickels and the like price by count; .999 fine silver, 10K/14K/18K/22K gold, sterling, and platinum scrap price by gram.</li>
+  <li><strong>Live spot prices</strong> — every calculation pulls the current market price for gold, silver, and platinum. Never cached. Spot is shown alongside the total so the rep sees the market context.</li>
+  <li><strong>Per-category margin</strong> — your margin policy from Airtable is applied automatically; staff never see or touch the math.</li>
+  <li><strong>Multi-line bag</strong> — add as many coins or bullion items as the customer brings; edit any line in place, remove any line individually, or start a fresh bag with a confirm prompt.</li>
+  <li><strong>Crash-safe cart</strong> — if an iPad accidentally locks or the app is closed mid-deal, the bag is preserved when staff re-open the app. The selected rep persists too.</li>
+  <li><strong>Clear error handling</strong> — if the iPad loses Wi-Fi or the pricing service has an issue, staff see an unmistakable message rather than a stale or zero total.</li>
+  <li><strong>Refresh Config button</strong> — when admin adds a new coin type or rep in Airtable, staff tap Refresh Config and it shows up immediately. No app reinstall.</li>
+</ul>
+
+<h3>How a calculation actually works</h3>
+
+<p>Each tap of Calculate Total runs this end-to-end:</p>
+
+<ol>
+  <li>The iPad sends the current bag (line by line) to a Make.com workflow.</li>
+  <li>That workflow fetches today's spot prices for gold, silver, and platinum from metals-api.com.</li>
+  <li>It reads your current margin percentages from Airtable (<code>Config_Margins</code>).</li>
+  <li>It computes each line's offer and the grand total, and returns them to the iPad.</li>
+</ol>
+
+<p>The market price you see on screen is the price at the moment of the tap. If you change a margin in Airtable while staff are using the app, the next Calculate reflects the new margin instantly — no app refresh required.</p>
+
+<h2>How to access it on the web</h2>
+
+<div class="url-box">
+  <div class="label">Live App URL</div>
+  <div class="url">https://coin-appraisal-register.vercel.app</div>
+</div>
+
+<p>Open in any modern browser — Chrome, Safari, Edge, Firefox — on any device. Laptop, desktop, phone, iPad. Same app, same data. Useful for admin sanity-checks and previewing changes from a desk.</p>
+
+<p class="muted"><small>The URL is a default <code>.vercel.app</code> subdomain. If you want to put this behind a custom domain (e.g., <code>register.yourcompany.com</code>) at any point, the change is a small DNS configuration on Vercel — happy to walk you through it once we transfer hosting.</small></p>
+
+<h2>How to install it on an iPad</h2>
+
+<p>Once per iPad, takes under a minute. Repeat for every device on the floor.</p>
+
+<div class="step">
+  <div class="num">1</div>
+  <h4>Open Safari</h4>
+  <p>The blue compass icon. <strong>It must be Safari, not Chrome</strong> — Apple only allows app-installation from Safari on iPads.</p>
+</div>
+
+<div class="step">
+  <div class="num">2</div>
+  <h4>Go to the URL</h4>
+  <p>Type <code>coin-appraisal-register.vercel.app</code> into the address bar and load the page. Wait for the calculator to render.</p>
+</div>
+
+<div class="step">
+  <div class="num">3</div>
+  <h4>Tap the Share button</h4>
+  <p>The square-with-up-arrow icon, in the address bar at the top of Safari.</p>
+</div>
+
+<div class="step">
+  <div class="num">4</div>
+  <h4>Tap "Add to Home Screen"</h4>
+  <p>Scroll down in the share sheet if needed. The dialog will show the gold "C" icon and the name. Default name is "Coin Register" — you can rename if you like.</p>
+</div>
+
+<div class="step">
+  <div class="num">5</div>
+  <h4>Tap Add</h4>
+  <p>The icon now lives on the home screen. Tap it to open the app full-screen — no Safari address bar, no browser chrome, runs like a native app.</p>
+  <p class="note">The first launch shows a brief gold splash before the calculator appears. Subsequent launches are instant.</p>
+</div>
+
+<h2>What admin can change without a developer</h2>
+
+<p>The app reads four config tables from your Airtable base. Edits to any of these are reflected on the iPads with no code change, no redeploy, and (for margins) no app refresh.</p>
+
+<table>
+  <thead>
+    <tr><th style="width: 35%">Airtable table</th><th>What you can change</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>Config_Margins</code></td>
+      <td>The percentage of melt value you pay for each metal category. Edit a number, save the row — the next Calculate on any iPad uses the new value.</td>
+    </tr>
+    <tr>
+      <td><code>Config_CoinTypes</code></td>
+      <td>The list of coin types in the Add Coin picker. Add a new row (with name, metal type, pricing-by, and the troy-ounces-per-unit invariant), set <code>active = true</code>, save. Tap Refresh Config on the iPad — the new coin is in the picker.</td>
+    </tr>
+    <tr>
+      <td><code>Config_Reps</code></td>
+      <td>The list of reps in the dropdown. Add or remove rows, toggle <code>active</code>. Tap Refresh Config on the iPad to see the change.</td>
+    </tr>
+    <tr>
+      <td><code>Config_RawCoinOverrides</code></td>
+      <td>Reserved for M2 (raw / antique coin lookup). Empty for now.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>API keys (metals-api.com, and others as M2 lands) live in Make.com under your account once we transfer ownership — never in the app, never in your browser, never visible to staff.</p>
+
+<h2>What's <em>not</em> in this delivery</h2>
+
+<p>M1 covers the most common transaction type on the floor — bulk silver and metals. The remaining engines are scoped for M2:</p>
+
+<ul>
+  <li><strong>Graded coin lookup</strong> — barcode-scan or manual entry of PCGS/NGC certificate numbers, returning grade, coin identity, and PCGS Price Guide value alongside the CDN Greysheet wholesale reference.</li>
+  <li><strong>eBay comparable prices</strong> — for collectibles outside the metals/graded categories. Staff types an item name; the app returns a sold-price range from recent eBay listings.</li>
+  <li><strong>Full deal log</strong> — completed deals written back to Airtable with rep, customer info, driver's-license capture (hard block if missing), spot prices at the time of deal, line items, total offer, acceptance, payment method, and cash received.</li>
+  <li><strong>Staff authentication</strong> — required once the app starts writing deals back to Airtable. Today the rep dropdown identifies who's on the deal; M2 will add a proper login.</li>
+  <li><strong>Your branding</strong> — the current app uses a placeholder gold "C" icon and the default app name "Coin Register". Once you provide a logo and accent color, those drop in as a follow-up update.</li>
+</ul>
+
+<h2>What we need from you to close out M1</h2>
+
+<ol>
+  <li><strong>Confirm the margins.</strong> The four Airtable rows in <code>Config_Margins</code> are seeded at 30% for silver, gold, and platinum. The legacy spreadsheet's effective rate was closer to 26.3%. Worth aligning before staff price real customer deals.</li>
+  <li><strong>Branding assets:</strong> a square logo (PNG, at least 512×512), an accent color (hex code), and the app name you want on the iPad home screen.</li>
+  <li><strong>GitHub access:</strong> create a free GitHub account at <code>github.com</code> if you don't have one, then send Kristof your username so the code repository can be transferred to your account. ~30 minutes total.</li>
+  <li><strong>Vercel access:</strong> create a free Vercel account (sign in with the same GitHub) at <code>vercel.com</code>. Once the GitHub repo transfer is complete, hosting moves under your Vercel account at the same time.</li>
+  <li><strong>iPad smoke test:</strong> install the app on one of your floor iPads (using the steps above) and run a few test calculations. We'll do a 15-minute walkthrough together to confirm everything feels right on the actual hardware before staff use it for live deals.</li>
+</ol>
+
+<p>After those, ownership of the entire stack — repo, hosting, Make scenarios, Airtable, API keys — sits with you. M2 can begin whenever you're ready to scope it.</p>
+
+<div class="summary-box">
+  <p><strong>Bottom line:</strong> M1 is built, deployed, and pricing against live market data right now. The remaining steps are paperwork (account access) and confirmation (margins, branding, smoke test) — none require additional development.</p>
+</div>
+
+<div class="footer">
+  Built by Flowtive · kristof@getflowtive.com · April 2026
+</div>
+
+</body>
+</html>
