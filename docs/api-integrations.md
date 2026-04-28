@@ -73,13 +73,13 @@ Each item carries either `quantity` (for `each_metal` coin types — number of c
 // response
 { "spot": { "gold": 4750.00, "silver": 76.08, "platinum": 2055.30 },
   "lines": [
-    { "coin_type_id": "rec...", "unit_value": 1.65, "line_total": 16.52 },
-    { "coin_type_id": "rec...", "unit_value": 0.74, "line_total": 184.30 }
+    { "coin_type_id": "rec...", "name": "Roosevelt Dime", "units": 10, "unit_value": 1.65, "line_total": 16.52 },
+    { "coin_type_id": "rec...", "name": "14K Gold", "units": 23.4, "unit_value": 0.74, "line_total": 184.30 }
   ],
   "total": 200.82 }
 ```
 
-`unit_value` is the per-unit offer (per coin or per gram, matching the request's input unit) at the live spot and current `margin_pct`.
+`unit_value` is the per-unit offer (per coin or per gram, matching the request's input unit) at the live spot and current `margin_pct`. `name` mirrors `Config_CoinTypes.name` and `units` echoes the request's `quantity` or `weight_grams` — both are convenience fields for log/admin views; the PWA itself sources display names from its cached config (cart denormalizes coin metadata at add-time).
 
 ### `POST /graded-lookup`
 ```json

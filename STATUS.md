@@ -90,12 +90,13 @@ The repo holds specs, blueprints, and (once 4A starts) PWA source. These live el
 
 | Blocker | Owner | Notes |
 |---|---|---|
-| **Rep names** | Client | `Config_Reps` is empty. PWA dropdown will be empty until names land. Fine to seed a placeholder row for testing. |
 | **Margin confirmation** | Client | Seeded at 0.30 across silver/gold/platinum. Legacy effective rate was ~0.263. Worth confirming before staff use it on the floor. |
 | **Branding** | Client | App name, square logo (PNG ≥ 512×512), accent color. Not blocking — 4E ships with placeholder icon, real assets land via follow-up PR. Blocking 4H sign-off only. |
 | **Client GitHub + Vercel access** | Client | Not blocking 4A–4E (build proceeds under dev's accounts). Blocks 4F.2 (production transfer) only. |
 
 Resolved on 2026-04-28: iPad usage model — works for both rep-assigned and shared iPads via auto-clear-on-rep-change. Cart wipes whenever the rep dropdown changes from one non-null value to a different non-null value. No confirmation dialog. See architectural decision #6 in [docs/pwa-build-plan.md](docs/pwa-build-plan.md).
+
+Resolved on 2026-04-28: rep names landed in `Config_Reps` — Adam, Amy, John. Dropdown will populate from `config-load` on app launch.
 
 ## Build notes from prior sessions (still relevant)
 
