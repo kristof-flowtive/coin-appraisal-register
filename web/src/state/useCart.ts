@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import type { CartLine } from '../api/types'
+import type { CartLine, CartLineInput } from '../api/types'
 
 const STORAGE_KEY = 'car.cart.v1'
 
@@ -16,7 +16,7 @@ function readInitial(): CartLine[] {
 
 export interface UseCartResult {
   lines: CartLine[]
-  addLine: (line: Omit<CartLine, 'id'>) => void
+  addLine: (line: CartLineInput) => void
   removeLine: (id: string) => void
   updateLine: (id: string, value: number) => void
   clear: () => void
@@ -29,7 +29,7 @@ export function useCart(): UseCartResult {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(lines))
   }, [lines])
 
-  const addLine = useCallback((line: Omit<CartLine, 'id'>) => {
+  const addLine = useCallback((line: CartLineInput) => {
     setLines((prev) => [...prev, { ...line, id: crypto.randomUUID() } as CartLine])
   }, [])
 

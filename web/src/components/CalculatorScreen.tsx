@@ -4,6 +4,7 @@ import { cartLineToRequestItem } from '../api/types'
 import { useCart } from '../state/useCart'
 import { useConfig } from '../state/useConfig'
 import { useSession } from '../state/useSession'
+import { AddCoinModal } from './AddCoinModal'
 
 const usd = new Intl.NumberFormat('en-US', {
   style: 'currency',
@@ -17,6 +18,7 @@ export function CalculatorScreen() {
 
   const [calcLoading, setCalcLoading] = useState(false)
   const [calcError, setCalcError] = useState<string | null>(null)
+  const [showAddCoin, setShowAddCoin] = useState(false)
 
   const prevRepRef = useRef<string | null>(null)
   useEffect(() => {
@@ -31,12 +33,6 @@ export function CalculatorScreen() {
     }
     prevRepRef.current = session.selectedRepId
   }, [session.selectedRepId, cart, session])
-
-  useEffect(() => {
-    if (import.meta.env.DEV) {
-      window.__test = { ...(window.__test ?? {}), addLine: cart.addLine }
-    }
-  }, [cart.addLine])
 
   async function handleCalculate() {
     if (cart.lines.length === 0) return
@@ -136,12 +132,9 @@ export function CalculatorScreen() {
             Bag ({cart.lines.length})
           </h2>
           <button
-            onClick={() =>
-              window.alert(
-                'Add Coin form lands in Phase 4D. For now, use window.__test.addLine() in the dev console.',
-              )
-            }
-            className="px-3 py-1.5 text-sm rounded-md bg-slate-900 text-white hover:bg-slate-800"
+            onClick={() => setShowAddCoin(true)}
+            disabled={config.loading || config.coinTypes.length === 0}
+            className="px-3 py-1.5 text-sm rounded-md bg-slate-900 text-white hover:bg-slate-800 disabled:bg-slate-300 disabled:text-slate-500"
           >
             Add Coin
           </button>
@@ -221,6 +214,13 @@ export function CalculatorScreen() {
           </button>
         </div>
       </div>
+
+      <AddCoinModal
+        isOpen={showAddCoin}
+        onClose={() => setShowAddCoin(false)}
+        coinTypes={config.coinTypes}
+        onAdd={cart.addLine}
+      />
     </main>
   )
 }

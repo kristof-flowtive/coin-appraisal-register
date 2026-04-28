@@ -56,6 +56,11 @@ export type CartLine =
   | (CartLineBase & { priced_by: 'each_metal'; quantity: number })
   | (CartLineBase & { priced_by: 'weight_grams'; weight_grams: number })
 
+type DistributiveOmit<T, K extends keyof CartLineBase | keyof CartLine> =
+  T extends unknown ? Omit<T, K> : never
+
+export type CartLineInput = DistributiveOmit<CartLine, 'id'>
+
 export function cartLineToRequestItem(line: CartLine): BulkCalcRequestItem {
   return line.priced_by === 'each_metal'
     ? { coin_type_id: line.coin_type_id, quantity: line.quantity }

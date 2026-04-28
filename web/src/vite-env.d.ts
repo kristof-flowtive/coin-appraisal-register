@@ -2,7 +2,7 @@
 /// <reference types="vite-plugin-pwa/client" />
 
 import type { calculateBulk, loadConfig } from './api/client'
-import type { CartLine } from './api/types'
+import type { CartLineInput } from './api/types'
 
 interface ImportMetaEnv {
   readonly VITE_CONFIG_LOAD_URL: string
@@ -18,7 +18,7 @@ declare global {
     __test?: {
       loadConfig?: typeof loadConfig
       calculateBulk?: typeof calculateBulk
-      addLine?: (line: Omit<CartLine, 'id'>) => void
+      addLine?: (line: CartLineInput) => void
     }
   }
 }
